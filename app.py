@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import os
 from langchain_google_genai import ChatGoogleGenerativeAI
-from langchain.schema import SystemMessage, HumanMessage, AIMessage
+from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
 
 # ==========================================
 # 1. Configuration & Security
