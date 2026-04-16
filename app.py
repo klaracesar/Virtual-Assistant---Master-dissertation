@@ -181,8 +181,15 @@ if prompt := st.chat_input("Posez votre question ici..."):
         with st.spinner("En train de réfléchir..."):
             try:
                 response = llm.invoke(langchain_messages)
-                full_response = response.content
+                
+                if isinstance(response.content, list):
+                    full_response = "".join([bloc.get("text", "") for bloc in response.content if isinstance(bloc, dict) and "text" in bloc])
+                else:
+                    full_response = response.content
+                # ------------------------------
+                
                 st.markdown(full_response)
                 st.session_state.messages.append({"role": "assistant", "content": full_response})
+                
             except Exception as e:
                 st.error(f"Erreur : {e}")
