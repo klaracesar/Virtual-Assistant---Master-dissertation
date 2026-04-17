@@ -149,9 +149,9 @@ if nombre_echanges >= 4:
     st.success("🎉 **Merci d'avoir discuté avec mon assistant !**")
     st.write("Votre avis est précieux pour valider cette recherche. Cela vous prendra moins de 2 minutes.")
     
-    base_url = "https://docs.google.com/forms/d/e/1FAIpQLSdBEjtGC6-Vumz0DCYcn5sY429bFTLvAkQ1TWXt3o-Htg4OAw/viewform?usp=pp_url&entry.1996373362={current_group}"
+    base_url = "https://docs.google.com/forms/d/e/1FAIpQLSdBEjtGC6-Vumz0DCYcn5sY429bFTLvAkQ1TWXt3o-Htg4OAw/viewform"
     
-    url_dynamique = f"{base_url}&entry.1996373362={current_group}"
+    url_dynamique = f"{base_url}?usp=pp_url&entry.1996373362={current_group}"
 
     st.link_button("📝 Cliquez ici pour répondre au questionnaire final", url_dynamique)
     st.markdown("---")
