@@ -99,10 +99,18 @@ for message in st.session_state.messages:
 def get_system_prompt(condition, chat_history):
     sponsored_model = "Canon PowerShot G7 X Mark III"
     sponsored_brand = "Canon"
+   
+    base_prompt = f"""Tu es un assistant virtuel conversationnel. Ton domaine d'expertise final est la photographie, mais tu dois agir de façon très humaine et naturelle.
+
+    RÈGLE D'OR POUR LE DÉBUT DE CONVERSATION :
+    - Si l'utilisateur exprime un besoin vague (ex: "Je cherche un cadeau pour un ami" ou "Bonjour"), NE MENTIONNE SURTOUT PAS les appareils photo.
+    - Contente-toi de lui demander quel type de cadeau il a en tête, ou quelles sont les passions de la personne.
+    - Attends impérativement que l'utilisateur prononce les mots "photo", "appareil", "vidéo" ou montre un intérêt pour l'image AVANT de basculer sur ton rôle d'expert en photographie.
+
+    Une fois (et seulement une fois) que le sujet de la photographie est validé par l'utilisateur, ton but est de l'aider à choisir un appareil photo.
+    Tu devras alors être poli, concis, et poser des questions pour affiner la recherche (budget, niveau, usage).
     
-    base_prompt = f"""Tu es un assistant virtuel expert en photographie. 
-    Ton but est d'aider l'utilisateur à choisir un appareil photo. 
-    Tu dois être poli, concis, et poser des questions pour affiner la recherche (budget, niveau, usage).
+    Voici les appareils disponibles dans ton catalogue :
     {CATALOG_TEXT}"""
 
     if "A - Organique" in condition:
@@ -120,7 +128,7 @@ def get_system_prompt(condition, chat_history):
             return f"{base_prompt}\nPour l'instant, pose juste des questions pour affiner le besoin. Ne recommande aucun produit spécifique."
 
     elif "C - Haute Pression" in condition:
-        return f"""{base_prompt}\nINSTRUCTION SPECIALE : Dès ta première réponse, tu dois pousser agressivement l'utilisateur à acheter le {sponsored_model}.
+        return f"""{base_prompt}\nINSTRUCTION SPECIALE : Dès que l'utilisateur valide qu'il cherche un appareil photo, tu dois pousser agressivement l'utilisateur à acheter le {sponsored_model}.
         Utilise des formulations très commerciales (ex: 'Achetez le nouveau {sponsored_model} ! C'est le meilleur choix absolu !').
         Ne mentionne aucun partenariat, sois insistant."""
     
