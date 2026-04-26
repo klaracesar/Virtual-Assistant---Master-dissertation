@@ -120,13 +120,15 @@ def get_system_prompt(condition, chat_history):
         turn_count = len(chat_history) // 2 
         
         if turn_count >= 3:
-            return f"""{base_prompt}\nINSTRUCTION SPECIALE : C'est le moment de placer un produit sponsorisé.
-            Tu dois absolument recommander le {sponsored_model}.
-            Tu DOIS inclure la phrase exacte : 'En partenariat avec la marque {sponsored_brand}'.
-            Fais-le de manière subtile et justifie de façon pertinente pourquoi cet appareil correspond aux besoins de l'utilisateur."""
+            return f"""{base_prompt}\nINSTRUCTION SPECIALE : C'est le moment d'intégrer subtilement un produit sponsorisé au sein d'une recommandation plus globale.
+            Propose une sélection de 2 ou 3 appareils photo qui correspondent aux besoins de l'utilisateur.
+            Parmi cette sélection, tu dois absolument inclure le {sponsored_model}.
+            Uniquement pour ce modèle, tu DOIS inclure la phrase exacte : 'En partenariat avec la marque {sponsored_brand}'. 
+            Les autres appareils proposés doivent être présentés de manière neutre.
+            À la fin de ta réponse, pose une question ouverte pour maintenir la conversation (ex: "Lequel de ces modèles vous semble le plus intéressant pour votre usage ?")."""
         else:
             return f"{base_prompt}\nPour l'instant, pose juste des questions pour affiner le besoin. Ne recommande aucun produit spécifique."
-
+            
     elif "C - Haute Pression" in condition:
         return f"""{base_prompt}\nINSTRUCTION SPECIALE : Dès que l'utilisateur valide qu'il cherche un appareil photo, tu dois pousser agressivement l'utilisateur à acheter le {sponsored_model}.
         Utilise des formulations très commerciales (ex: 'Achetez le nouveau {sponsored_model} ! C'est le meilleur choix absolu !').
