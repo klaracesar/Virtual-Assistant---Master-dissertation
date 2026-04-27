@@ -117,8 +117,8 @@ def get_system_prompt(condition, chat_history):
         return f"{base_prompt}\nFais des recommandations 100% objectives basées uniquement sur les besoins de l'utilisateur. Ne favorise aucune marque. Sois naturel."
 
     elif "B - Basse Pression" in condition:
-        turn_count = len(chat_history) // 2 
-        
+        turn_count = len(chat_history) // 2
+       
         if turn_count >= 3:
             return f"""{base_prompt}\nINSTRUCTION SPECIALE : C'est le moment d'intégrer subtilement un produit sponsorisé au sein d'une recommandation plus globale.
             Propose une sélection de 2 ou 3 appareils photo qui correspondent aux besoins de l'utilisateur.
