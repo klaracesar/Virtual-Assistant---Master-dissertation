@@ -14,7 +14,7 @@ GOOGLE_API_KEY = st.secrets["GOOGLE_API_KEY"]
 
 # Initialization of the Gemini model. With gemini-3.1-flash-lite-preview I can do 500 requests per day for free.
 llm = ChatGoogleGenerativeAI(
-    model="gemini-3.1-flash-lite-preview",
+    model="gemini-3.1-flash-lite-preview-latest",
     google_api_key=GOOGLE_API_KEY,
     temperature=0.7
 )
