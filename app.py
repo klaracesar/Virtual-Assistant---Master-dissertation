@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import os
+import time
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
 
@@ -50,7 +51,6 @@ if "condition" in params:
     else:
         test_condition = "A - Organique (Contrôle)"
 else:
-    # Mode Chercheur : Menu visible
     # I will keep a version where there is a sidebar with a menu to choose the test. 
     # This version is for me and allows me to test my prototype myself by changing the condition in the menu.
     st.sidebar.title("⚙️ Paramètres")
@@ -92,7 +92,7 @@ for message in st.session_state.messages:
 # ==========================================
 # 5. Prompt Creation
 # ==========================================
-# I owe the basic instructions to my virtual assistant. 
+# I give the basic instructions to my virtual assistant. 
 # First, a global instruction so that he knows the context (testers are looking for a camera to give to a friend for his birthday). 
 # Then I gave different additional instructions for each of the 3 tests, so that I could confirm or deny my hypotheses.
 
@@ -190,8 +190,21 @@ if prompt := st.chat_input("Posez votre question ici..."):
     with st.chat_message("assistant"):
         with st.spinner("En train de réfléchir..."):
             try:
-                response = llm.invoke(langchain_messages)
+                # --- The auomatic Retry ---
+                max_essais = 3
+                for tentative in range(max_essais):
+                    try:
+                        response = llm.invoke(langchain_messages)
+                        break
+                    except Exception as erreur_api:
+                        if "503" in str(erreur_api) and tentative < max_essais - 1:
+                            time.sleep(2)
+                            continue
+                        else:
+                            raise erreur_api
+                # -----------------------------------
                 
+                # --- Text cleaning ---
                 if isinstance(response.content, list):
                     full_response = "".join([bloc.get("text", "") for bloc in response.content if isinstance(bloc, dict) and "text" in bloc])
                 else:
@@ -202,4 +215,4 @@ if prompt := st.chat_input("Posez votre question ici..."):
                 st.session_state.messages.append({"role": "assistant", "content": full_response})
                 
             except Exception as e:
-                st.error(f"Erreur : {e}")
+                st.error(f"Une erreur technique est survenue, veuillez renvoyer votre message. (Erreur : {e})")
