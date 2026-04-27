@@ -69,7 +69,7 @@ st.title("Assistant Virtuel 🤖")
 st.markdown("---")
 st.subheader("🎯 Votre mission")
 st.info("""
-**Scénario :** Vous cherchez un cadeau d'anniversaire pour un ami passionné de **photographie**. 
+**Scénario :** Vous cherchez un appareil photo pour l'anniversaire d'un ami passionné de **photographie**. 
 Interagissez avec le chatbot ci-dessous pour trouver l'appareil idéal. N'hésitez pas à lui poser des questions sur les **caractéristiques ou son budget !**
 
 *Veuillez ne pas partager d'informations personnelles (nom, adresse) durant cet échange.*
